@@ -1,0 +1,102 @@
+INTRODUCTION:
+
+In this project, I’ll show how to design a Digital Voltmeter using 8051 Microcontroller and also explain its working. Voltmeter is a measuring instrument, used to measure the voltage difference between two points in electrical network. Generally, there are two types of voltmeters – one is analog voltmeter and the other one is digital voltmeter.
+In analog voltmeter a pointer moves on the scale to represent the voltage. Digital voltmeter directly displays the voltage in digits with the help of analog to digital converter. This article explains you how to design a digital voltmeter in two methods 1) using 8051 microcontroller and 2)the other using IC L7017.
+
+Analog to Digital Conversion:
+
+In real world, mostly we find analog data. To manipulate this data using digital systems, we need to convert analog data to digital, so that microprocessor or microcontroller is able understand and manipulate the data.
+1.Transducer: Transducer or sensor is used to convert the physical quantity to electrical energy. Light dependent resistor, temperature sensor, humidity sensor, gas sensor etc. are examples of transducers.
+2.ADC (Analog to Digital Converter): ADC converts the input electrical voltage to Digital value.
+3.Digital System: this system reads input digital data and displays the physical quantity on LCD for understanding purpose.
+Here ADC IC generates the output digital value based on the input electrical voltage. The 8051 microcontroller reads this digital value and displays it on LCD.
+
+Circuit Components:
+
+->AT89C51 micro controller
+->ADC0804 IC
+->25V Voltage Sensor
+->AT89C51 programming board
+->Variable resistor (to demonstrate the program)
+->DC Adapter or Battery
+
+CIRCUIT DESIGN:
+
+analog to digital converter IC data bits are connected to the PORT2. LCD data pins are connected to the POTR3 of controller and control pins RS and EN are connected to the P1.6 and P1.7 respectively.
+
+ADC0804  
+
+This is an 8 bit analog to digital converter. This IC uses successive approximation method to convert analog values to digital. It can take only one analog data as input. The step size of this IC is varied by varying the reference voltage at pin9. If this pin is not connected, VCC will be the reference voltage.
+
+For every 19.53mV, rise in input voltage the output is incremented by 1 value when the step size is at 5V. The conversion time of this IC depends on clock source.
+
+ADC Features:
+
+0 to 5V analog input voltage.
+Built in clock generator.
+Differential analog inputs.
+Adjustable reference voltage.
+Below table shows the different step sizes for different reference voltages.
+
+In the above circuit diagram, pin9 (Vref/2) is left open so that input voltage span can be 0 to 5V.
+
+Step size = Vref/(2 pow(n))
+
+Where n is resolution. For ADC0804 the resolution n=8. The digital output can be calculated using the formulae
+
+Dout = Vin/stepsize.
+
+Vin – analog input voltage
+
+ For example, let the analog input voltage is 4V, then the digital output is Dout=4/19.53mV=204.
+
+Steps to Convert the Analog Input to Digital
+Read the ADC value from the PORT2.
+#define dat P2
+
+val=dat*0.02;
+
+After multiplying by 100, you get a positive interger value of three digits. 
+val1=val*100;
+
+Separate individual numbers and print them on LCD including the decimal point.
+temp=(((val1/100)%10)+48);
+
+display(temp);
+
+display(‘.’);
+
+temp=(((val1/10)%10)+48);
+
+display(temp);
+
+temp=((val1%10)+48);
+
+display(temp);
+
+Voltage Sensor:
+
+The voltage sensor module is a simple voltage divider network that increases the analog input range of the ADC to about 25V.
+
+WORKING:
+
+1.Initially burn the program to the at89c51 microcontroller.
+2.Now give the connections as per the circuit diagram.
+3.Connect a battery or any voltage source at the input of the voltage sensor.
+4.Make sure that maximum analog input voltage should be less than 25V DC
+5.Connect a digital multi meter at the Input terminals of the voltage sensor.
+6.Now switch on the board supply.
+7.Now observe both LCD and digital multi meter, both displays the same voltage (or very similar voltages).
+8.If possible, try to slowly vary the analog input voltage. Now you can observe that both multimeter and LCD displays the same voltages so that we can say that voltmeter is working properly.
+9.Switch off the board supply.
+
+APPLICTATIONS:
+
+->This system is used to measure the voltage in low voltage applications.
+->Used to measure the toy batteries.
+->We can measure the physical quantities like temperature, humidity, gas etc. using this system with a little modification.
+
+LIMITATIONS:
+
+->The input analog voltage range should be 0 to 5V.
+->Using this system we can measure only one analog input value at a time.
