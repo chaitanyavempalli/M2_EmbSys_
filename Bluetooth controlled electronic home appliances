@@ -41,10 +41,6 @@ SOFTWARE REQUIREMENTS:
 ->Proteus (for Circuit Diagram and Simulation)
 ->Android Application installed on Android Device
 
-BLOCK DIAGRAM:
-
-![Capture](https://user-images.githubusercontent.com/98868528/154855916-00b896ae-e652-48a3-8090-d40dda6db06d.PNG)
-
 CIRCUIT DESIGN:
 
 This project consists of a microcontroller, 16 x 2 alphanumeric LCD, 4 – Channel Relay Module, Loads (Light Bulbs are used in the demonstration) and Bluetooth Module.
